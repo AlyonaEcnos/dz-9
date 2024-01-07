@@ -16,8 +16,11 @@ class ContactAssistant:
 
     @input_error
     def add_contact(self, name, phone):
-        self.contacts[name] = phone
-        return f"Contact {name} added with phone {phone}"
+        if name in self.contacts:
+            raise ValueError(f"Contact with name {name} already exists. Use 'change' command to update the phone number.")
+        else:
+            self.contacts[name] = phone
+            return f"Contact {name} added with phone {phone}"
 
     @input_error
     def change_contact(self, name, phone):
