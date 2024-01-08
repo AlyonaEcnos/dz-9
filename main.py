@@ -4,8 +4,8 @@ def input_error(func):
             return func(*args, **kwargs)
         except KeyError:
             return "Enter user name"
-        except ValueError:
-            return "Give me name and phone please"
+        except ValueError as e:
+            return e
         except IndexError:
             return "Contact not found"
     return wrapper
@@ -64,6 +64,8 @@ def main():
                 if len(user_input) == 1:
                     raise ValueError("Invalid command. Please try again. Use 'add <name> <phone>'")
                 _, contact_info = user_input
+                if len(contact_info.split()) != 2:
+                    raise ValueError("Invalid command. Please try again. Use 'add <name> <phone>'")
                 name, phone = contact_info.split(" ", 1)
                 print(assistant.add_contact(name, phone))
             elif command == "change":
